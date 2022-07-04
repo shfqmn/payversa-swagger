@@ -1,0 +1,898 @@
+swagger: "2.0"
+info:
+  title: "Payversa"
+  version: "1.0.0"
+  description: "Payversa API Documentation"
+  termsOfService: "http://swagger.io/terms/"
+host: "localhost:8080"
+schemes:
+  - "http"
+  - "https"
+basePath: "/api/v1/"
+produces:
+  - "application/json"
+tags:
+  - name: "Account"
+    description: "Currency account"
+
+  - name: "Transaction"
+    description: "Transaction operations"
+
+  - name: "Psp"
+    description: "Payment Service Provider"
+
+  - name: "Partner"
+    description: "Partner user account"
+
+  - name: "Admin"
+    description: "Admnistrator user account"
+
+  - name: "Settlement"
+    description: "Settlement operations"
+  
+  - name: "Gateway"
+    description: "Gateway operations"
+
+  - name: "User"
+    description: "User operations"
+
+paths:
+  /admin/{adminId}:
+    get:
+      tags:
+        - Admin
+      description: "Get admin user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:        
+        - name: "adminId"
+          in: "path"
+          description: "Admin user account id"
+          required: true
+          type: "string"
+          format: "byte"
+      responses:
+        200:
+          description: "Admin user account"
+        404:
+          description: "Admin user account not found"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "read:admin"
+    put:
+      tags:
+        - Admin
+      description: "Update admin user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "adminId"
+          in: "path"
+          description: "Admin user account id"
+          required: true
+          type: "string"
+          format: "byte"
+        - name: "body"
+          in: "body"
+          description: "Admin user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Admin"
+      responses:
+        200:
+          schema: 
+            $ref: "#/definitions/Admin"
+          description: "Admin account created"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:admin"
+  /admin:
+    get:
+      tags:
+        - Admin
+      description: "Get all admin user accounts"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          schema: 
+            type: "array"
+            items:
+              $ref: "#/definitions/Admin"
+          description: "Admin user account"
+        404:
+          description: "Admin user account not found"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "read:admin"
+    post:
+      tags:
+        - Admin
+      description: "Create admin user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Admin user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Admin"
+      responses:
+        204:
+          description: "Admin user account created"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:admin"
+  
+  /user/login:
+    post:
+      tags:
+        - User
+      description: "Login user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "user credentials"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "email"
+              - "password"
+            properties:
+              email:
+                type: "string"
+                description: "User account email"
+              password:
+                type: "string"
+                description: "User account password"
+      responses:
+        200:
+          description: "Logged in"
+        400:
+          description: "Email or password is incorrect"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:user"
+  /user/logout:
+    post:
+      tags:
+        - User
+      description: "Logout user account"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Logged out"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:user"
+  /user/refresh:
+    post:
+      tags:
+        - User
+      description: "Refresh access token"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "refresh cookie"
+          required: true
+          description: "Refresh cookie"
+          schema:
+            type: "string"
+      responses:
+        200:
+          description: "Refreshed"
+        400:
+          description: "Refresh token is incorrect"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:user"
+  
+  /partner/{partnerId}:
+    get:
+      tags:
+        - Partner
+      description: "Get partner user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "partnerId"
+          in: "path"
+          description: "Partner user account id"
+          required: true
+          type: "string"
+          format: "byte"
+      responses:
+        200:
+          description: "Partner user account"
+        404:
+          description: "Partner user account not found"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "read:partner"
+    put:
+      tags:
+        - Partner
+      description: "Update partner user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "partnerId"
+          in: "path"
+          description: "Partner user account id"
+          required: true
+          type: "string"
+          format: "byte"
+        - name: "body"
+          in: "body"
+          description: "Partner user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Partner"
+      responses:
+        200:
+          description: "Partner user account created"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:partner"
+          - "read:partner"
+  /partner:
+    get:
+      tags:
+        - Partner
+      description: "Get all partner user accounts"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          schema: 
+            type: "array"
+            items:
+              $ref: "#/definitions/Partner"
+          description: "Partner user account"
+        404:
+          description: "Partner user account not found"
+        500:
+          description: "Internal server error"  
+      security:
+        - api_auth:
+          - "read:partner"
+    post:
+      tags:
+        - Partner
+      description: "Create partner user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Partner user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Partner"
+      responses:
+        204:
+          description: "Partner user account created"
+        500:
+          description: "Internal server error"
+
+  /psp/{pspId}:
+    get:
+      tags:
+        - Psp
+      description: "Get psp user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "pspId"
+          in: "path"
+          description: "Psp user account id"
+          required: true
+          type: "string"
+          format: "byte"
+      responses:
+        200:
+          description: "Psp user account"
+        404:
+          description: "Psp user account not found"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "read:psp"
+    put:
+      tags:
+        - Psp
+      description: "Update psp user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "pspId"
+          in: "path"
+          description: "Psp user account id"
+          required: true
+          type: "string"
+          format: "byte"
+        - name: "body"
+          in: "body"
+          description: "Psp user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Psp"
+      responses:
+        200:
+          description: "Psp user account created"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:psp"
+          - "read:psp"
+  /psp:
+    get:
+      tags:
+        - Psp
+      description: "Get all psp user accounts"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          schema: 
+            type: "array"
+            items:
+              $ref: "#/definitions/Psp"
+          description: "Psp user account"
+        404:
+          description: "Psp user account not found"
+        500:
+          description: "Internal server error"  
+      security:
+        - api_auth:
+          - "read:psp"
+    post:
+      tags:
+        - Psp
+      description: "Create psp user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Psp user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Psp"
+      responses:
+        204:
+          description: "Psp user account created"
+        500:
+          description: "Internal server error"
+
+  /settlement/{settlementId}:
+    get:
+      tags:
+        - Settlement
+      description: "Get settlement user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "settlementId"
+          in: "path"
+          description: "Settlement user account id"
+          required: true
+          type: "string"
+          format: "byte"
+      responses:
+        200:
+          description: "Settlement user account"
+        404:
+          description: "Settlement user account not found"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "read:settlement"
+    put:
+      tags:
+        - Settlement
+      description: "Update settlement user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "settlementId"
+          in: "path"
+          description: "Settlement user account id"
+          required: true
+          type: "string"
+          format: "byte"
+        - name: "body"
+          in: "body"
+          description: "Settlement user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Settlement"
+      responses:
+        200:
+          description: "Settlement user account created"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:settlement"
+          - "read:settlement"
+  /settlement:
+    get:
+      tags:
+        - Settlement
+      description: "Get all settlement user accounts"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          schema: 
+            type: "array"
+            items:
+              $ref: "#/definitions/Settlement"
+          description: "Settlement user account"
+        404:
+          description: "Settlement user account not found"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "read:settlement"
+    post:
+      tags:
+        - Settlement
+      description: "Create settlement user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Settlement user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Settlement"
+      responses:
+        204:
+          description: "Settlement user account created"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:settlement"
+          - "read:settlement"
+  
+  /transaction/{transactionId}:
+    get:
+      tags:
+        - Transaction
+      description: "Get transaction user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "transactionId"
+          in: "path"
+          description: "Transaction user account id"
+          required: true
+          type: "string"
+          format: "byte"
+      responses:
+        200:
+          description: "Transaction user account"
+        404:
+          description: "Transaction user account not found"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "read:transaction"
+    put:
+      tags:
+        - Transaction
+      description: "Update transaction user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "transactionId"
+          in: "path"
+          description: "Transaction user account id"
+          required: true
+          type: "string"
+          format: "byte"
+        - name: "body"
+          in: "body"
+          description: "Transaction user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        200:
+          description: "Transaction user account created"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:transaction"
+          - "read:transaction"
+  /transaction:
+    get:
+      tags:
+        - Transaction
+      description: "Get all transaction user accounts"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          schema: 
+            type: "array"
+            items:
+              $ref: "#/definitions/Transaction"
+          description: "Transaction user account"
+        404:
+          description: "Transaction user account not found"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "read:transaction"
+    post:
+      tags:
+        - Transaction
+      description: "Create transaction user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Transaction user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Transaction"
+      responses:
+        204:
+          description: "Transaction user account created"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:transaction"
+          - "read:transaction"
+ 
+  /gateway/verify:
+    post:
+      tags:
+        - Gateway
+      description: "Verify token"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Payment verification data"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "token"
+              - "accessId"
+            properties:
+              token:
+                type: "string"
+                description: "Payment token"
+              accessId:
+                type: "string"
+                description: "Access id"
+      responses:
+        200:
+          description: "Verified"
+        400:
+          description: "Incorrect token"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:gateway"
+  /gateway/submit:
+    post:
+      tags:
+        - Gateway
+      description: "Submit payment"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Payment data"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "amount"
+              - "currency"
+              - "accessId"
+              - "token"
+            properties:
+              amount:
+                type: "number"
+                description: "Payment amount"
+              currency:
+                type: "string"
+                description: "Payment currency"
+              accessId:
+                type: "string"
+                description: "Access id"
+              token:
+                type: "string"
+                description: "Payment token"
+      responses:
+        200:
+          description: "Submitted"
+        400:
+          description: "Incorrect token"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:gateway"
+  /gateway/callback:
+    post:
+      tags:
+        - Gateway
+      description: "Callback payment"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Payment data"
+          required: true
+          schema:
+            type: "object"
+            required:
+              - "amount"
+              - "currency"
+              - "accessId"
+              - "token"
+            properties:
+              amount:
+                type: "number"
+                description: "Payment amount"
+              currency:
+                type: "string"
+                description: "Payment currency"
+              accessId:
+                type: "string"
+                description: "Access id"
+              token:
+                type: "string"
+                description: "Payment token"
+      responses:
+        200:
+          description: "Submitted"
+        400:
+          description: "Incorrect token"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:gateway"
+
+definitions:
+  Partner:
+    type: "object"
+    allOf:
+      - $ref: "#/definitions/User"
+    properties:
+      callbackURL:
+        type: "string"
+        description: "Callback url"
+      accessId:
+        type: "string"
+        description: "Access id"
+      accessSecret:
+        type: "string"
+        description: "Access secret"
+      companyReg:
+        type: "string"
+        description: "Company registration number"
+      accounts:
+        type: "array"
+        items:
+          $ref: "#/definitions/Account"
+      transactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/Transaction"
+  Admin:
+    type: "object"
+    allOf:
+      - $ref: "#/definitions/User"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
+        format: "password"
+      createdAt:
+        type: "string"
+        format: "date-time"
+      updatedAt:
+        type: "string"
+        format: "date-time"
+  Transaction:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      amount:
+        type: "number"
+        format: "double"
+      currency:
+        type: "string"
+        format: "currency"
+      accessId:
+        type: "string"
+        format: "byte"
+      token:
+        type: "string"
+        format: "byte"
+      createdAt:
+        type: "string"
+        format: "date-time"
+      updatedAt:
+        type: "string"
+        format: "date-time"
+  Account:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      currency:
+        type: "number"
+        format: "double"
+      balance:
+        type: "number"
+        format: "double"
+      UsdBalance:
+        type: "number"
+        format: "double"
+      partner:
+        $ref: "#/definitions/Partner"
+      transactions:
+        type: "array"
+        items:
+          $ref: "#/definitions/Transaction"
+      settlements:
+        type: "array"
+        items:
+          $ref: "#/definitions/Settlement"
+      createdAt:
+        type: "string"
+        format: "date-time"
+      updatedAt:
+        type: "string"
+        format: "date-time"
+  Settlement:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      amount:
+        type: "number"
+        format: "double"
+      destinationAccount:
+        type: "string"
+        format: "byte"
+      walletNetwork:
+        type: "string"
+        format: "byte"
+      walletAddress:
+        type: "string"
+        format: "byte"
+      status:
+        type: "string"
+        format: "byte"
+      approvedAt:
+        type: "string"
+        format: "date-time"
+      account:
+        $ref: "#/definitions/Account"
+  Psp:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        format: "byte"
+      description:
+        type: "string"
+        format: "byte"
+      createdAt:
+        type: "string"
+        format: "date-time"
+      updatedAt:
+        type: "string"
+        format: "date-time"
+
+securityDefinitions:
+  api_auth:
+    type: "apiKey"
+    in: "header"
+    name: "Authorization"
+    description: "Bearer token"
