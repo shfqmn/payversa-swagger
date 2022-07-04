@@ -617,6 +617,108 @@ paths:
           - "write:transaction"
           - "read:transaction"
  
+  /accounts/{accountId}:
+    get:
+      tags:
+        - Account
+      description: "Get account user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "accountId"
+          in: "path"
+          description: "Account user account id"
+          required: true
+          type: "string"
+          format: "byte"
+      responses:
+        200:
+          description: "Account user account"
+        404:
+          description: "Account user account not found"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "read:account"
+    put:
+      tags:
+        - Account
+      description: "Update account user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "accountId"
+          in: "path"
+          description: "Account user account id"
+          required: true
+          type: "string"
+          format: "byte"
+        - name: "body"
+          in: "body"
+          description: "Account user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Account"
+      responses:
+        200:
+          description: "Account user account created"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:account"
+          - "read:account"
+  /accounts:
+    get:
+      tags:
+        - Account
+      description: "Get all account user accounts"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          schema: 
+            type: "array"
+            items:
+              $ref: "#/definitions/Account"
+          description: "Account user account"
+        404:
+          description: "Account user account not found"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "read:account"
+    post:
+      tags:
+        - Account
+      description: "Create account user account"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "body"
+          in: "body"
+          description: "Account user account"
+          required: true
+          schema:
+            $ref: "#/definitions/Account"
+      responses:
+        204:
+          description: "Account user account created"
+        500:
+          description: "Internal server error"
+      security:
+        - api_auth:
+          - "write:account"
+          - "read:account"
+
   /gateway/verify:
     post:
       tags:
