@@ -4,7 +4,7 @@ info:
   version: "1.0.0"
   description: "Payversa API Documentation"
   termsOfService: "http://swagger.io/terms/"
-host: "localhost:8080"
+host: "payversa.ddns.net"
 schemes:
   - "http"
   - "https"
@@ -29,7 +29,7 @@ tags:
 
   - name: "Settlement"
     description: "Settlement operations"
-  
+
   - name: "Gateway"
     description: "Gateway operations"
 
@@ -46,7 +46,7 @@ paths:
         - "application/json"
       produces:
         - "application/json"
-      parameters:        
+      parameters:
         - name: "adminId"
           in: "path"
           description: "Admin user account id"
@@ -62,7 +62,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "read:admin"
+            - "read:admin"
     put:
       tags:
         - Admin
@@ -86,14 +86,14 @@ paths:
             $ref: "#/definitions/Admin"
       responses:
         200:
-          schema: 
+          schema:
             $ref: "#/definitions/Admin"
           description: "Admin account created"
         500:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:admin"
+            - "write:admin"
   /admin:
     get:
       tags:
@@ -103,7 +103,7 @@ paths:
         - "application/json"
       responses:
         200:
-          schema: 
+          schema:
             type: "array"
             items:
               $ref: "#/definitions/Admin"
@@ -114,7 +114,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "read:admin"
+            - "read:admin"
     post:
       tags:
         - Admin
@@ -137,8 +137,8 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:admin"
-  
+            - "write:admin"
+
   /user/login:
     post:
       tags:
@@ -174,7 +174,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:user"
+            - "write:user"
   /user/logout:
     post:
       tags:
@@ -189,7 +189,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:user"
+            - "write:user"
   /user/refresh:
     post:
       tags:
@@ -215,8 +215,8 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:user"
-  
+            - "write:user"
+
   /partner/{partnerId}:
     get:
       tags:
@@ -242,7 +242,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "read:partner"
+            - "read:partner"
     put:
       tags:
         - Partner
@@ -271,8 +271,8 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:partner"
-          - "read:partner"
+            - "write:partner"
+            - "read:partner"
   /partner:
     get:
       tags:
@@ -282,7 +282,7 @@ paths:
         - "application/json"
       responses:
         200:
-          schema: 
+          schema:
             type: "array"
             items:
               $ref: "#/definitions/Partner"
@@ -290,10 +290,10 @@ paths:
         404:
           description: "Partner user account not found"
         500:
-          description: "Internal server error"  
+          description: "Internal server error"
       security:
         - api_auth:
-          - "read:partner"
+            - "read:partner"
     post:
       tags:
         - Partner
@@ -340,7 +340,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "read:psp"
+            - "read:psp"
     put:
       tags:
         - Psp
@@ -369,8 +369,8 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:psp"
-          - "read:psp"
+            - "write:psp"
+            - "read:psp"
   /psp:
     get:
       tags:
@@ -380,7 +380,7 @@ paths:
         - "application/json"
       responses:
         200:
-          schema: 
+          schema:
             type: "array"
             items:
               $ref: "#/definitions/Psp"
@@ -388,10 +388,10 @@ paths:
         404:
           description: "Psp user account not found"
         500:
-          description: "Internal server error"  
+          description: "Internal server error"
       security:
         - api_auth:
-          - "read:psp"
+            - "read:psp"
     post:
       tags:
         - Psp
@@ -438,7 +438,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "read:settlement"
+            - "read:settlement"
     put:
       tags:
         - Settlement
@@ -467,8 +467,8 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:settlement"
-          - "read:settlement"
+            - "write:settlement"
+            - "read:settlement"
   /settlement:
     get:
       tags:
@@ -478,7 +478,7 @@ paths:
         - "application/json"
       responses:
         200:
-          schema: 
+          schema:
             type: "array"
             items:
               $ref: "#/definitions/Settlement"
@@ -489,7 +489,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "read:settlement"
+            - "read:settlement"
     post:
       tags:
         - Settlement
@@ -512,9 +512,9 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:settlement"
-          - "read:settlement"
-  
+            - "write:settlement"
+            - "read:settlement"
+
   /transaction/{transactionId}:
     get:
       tags:
@@ -540,7 +540,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "read:transaction"
+            - "read:transaction"
     put:
       tags:
         - Transaction
@@ -569,8 +569,8 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:transaction"
-          - "read:transaction"
+            - "write:transaction"
+            - "read:transaction"
   /transaction:
     get:
       tags:
@@ -580,7 +580,7 @@ paths:
         - "application/json"
       responses:
         200:
-          schema: 
+          schema:
             type: "array"
             items:
               $ref: "#/definitions/Transaction"
@@ -591,7 +591,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "read:transaction"
+            - "read:transaction"
     post:
       tags:
         - Transaction
@@ -614,9 +614,9 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:transaction"
-          - "read:transaction"
- 
+            - "write:transaction"
+            - "read:transaction"
+
   /accounts/{accountId}:
     get:
       tags:
@@ -642,7 +642,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "read:account"
+            - "read:account"
     put:
       tags:
         - Account
@@ -671,8 +671,8 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:account"
-          - "read:account"
+            - "write:account"
+            - "read:account"
   /accounts:
     get:
       tags:
@@ -682,7 +682,7 @@ paths:
         - "application/json"
       responses:
         200:
-          schema: 
+          schema:
             type: "array"
             items:
               $ref: "#/definitions/Account"
@@ -693,7 +693,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "read:account"
+            - "read:account"
     post:
       tags:
         - Account
@@ -716,8 +716,8 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:account"
-          - "read:account"
+            - "write:account"
+            - "read:account"
 
   /gateway/verify:
     post:
@@ -754,7 +754,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:gateway"
+            - "write:gateway"
   /gateway/submit:
     post:
       tags:
@@ -798,7 +798,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:gateway"
+            - "write:gateway"
   /gateway/callback:
     post:
       tags:
@@ -842,7 +842,7 @@ paths:
           description: "Internal server error"
       security:
         - api_auth:
-          - "write:gateway"
+            - "write:gateway"
 
 definitions:
   Partner:
