@@ -90,15 +90,18 @@ paths:
         refNo+status+accessSecret
         
         Example:
+        amount: 100.00
+        currency: MYR
+        transId: 0001
         refNo: 123
         status: ACCEPTED
         accessSecret: secret
         
         The hash would be calculated on the following string:
-        123ACCEPTEDsecret
+        10000MYR0001123ACCEPTEDsecret
         
         The result is (using SHA-256 algorithm):
-        c70311b001482ab9700b2bd3e0df739a9fb08286f8691f4ed5482099e8c467af
+        5bfae778ce4d8ff18f2819b7ac9014e0d45e70ef7dea07679f06f03de66c454b
         
         
         Please make sure the signature is correct before proceding.
@@ -147,15 +150,18 @@ paths:
         refNo+status+accessSecret
         
         Example:
+        amount: 100.00
+        currency: MYR
+        transId: 0001
         refNo: 123
         status: ACCEPTED
         accessSecret: secret
         
         The hash would be calculated on the following string:
-        123ACCEPTEDexampleIdsecret
+        10000MYR0001123ACCEPTEDsecret
         
         The result is (using SHA-256 algorithm):
-        cd08694674a895f14f506ccf0278defc303a964ea2670bfc00368108d20e56c2
+        5bfae778ce4d8ff18f2819b7ac9014e0d45e70ef7dea07679f06f03de66c454b
         
         Please make sure the signature is correct before proceding.
       consumes:
