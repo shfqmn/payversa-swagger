@@ -36,6 +36,8 @@ paths:
         The result is (using SHA-256 algorithm):
         c3d8c0fca6730aa5b933392989cb336db2f1a2407979bcf8baf6385f4b4f5205
         
+        Note: The payment link will expire after 5 minutes
+        
       consumes: 
       - "application/json"
       produces: 
