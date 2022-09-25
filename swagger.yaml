@@ -113,10 +113,19 @@ paths:
         schema:
           type: "object"
           required:
+            - amount
+            - currency
+            - transId
             - refNo
             - status
             - signature
           properties:
+            amount:
+              type: "string"
+            currency:
+              type: "string"
+            transId:
+              type: "string"
             refNo:
               type: "string"
             status:
@@ -159,10 +168,19 @@ paths:
         schema:
           type: "object"
           required:
+            - amount
+            - currency
+            - transId
             - refNo
             - status
             - signature
           properties:
+            amount:
+              type: "string"
+            currency:
+              type: "string"
+            transId:
+              type: "string"
             refNo:
               type: "string"
             status:
